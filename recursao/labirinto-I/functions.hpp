@@ -26,31 +26,28 @@ void procura_inicio__fim(std::vector<std::string> &lab, std::pair<int, int> &ini
     }
 }
 
-void trilhar_caminho(std::vector<std::string> &lab, int l_pos, int c_pos, std::pair<int, int> &final, bool sou_caminho = false) {
+bool trilhar_caminho(std::vector<std::string> &lab, int l_pos, int c_pos, std::pair<int, int> &final) {
     int n_lin = lab.size();
     int n_col = lab[0].size();
 
-    //std::cout << "oi\n";
-
     if (l_pos >= n_lin || c_pos >= n_col || l_pos < 0 || c_pos < 0) {
-        return;
+        return false;
     } else if (lab[l_pos][c_pos] == '#') {
-        return;
+        return false;
     } else if (lab[l_pos][c_pos] == '.') {
-        return;
-    } else if (sou_caminho) {
-        lab[l_pos][c_pos] = '.';
-        return;
+        return false;
     } else if (l_pos == final.first && c_pos == final.second) {
         lab[l_pos][c_pos] = '.';
-        sou_caminho = true;
-        return;
+        return true;
     }
 
     lab[l_pos][c_pos] = '.';
 
-    trilhar_caminho(lab, l_pos, c_pos - 1, final, sou_caminho);
-    trilhar_caminho(lab, l_pos + 1, c_pos, final, sou_caminho);
-    trilhar_caminho(lab, l_pos, c_pos + 1, final, sou_caminho);
-    trilhar_caminho(lab, l_pos - 1, c_pos, final, sou_caminho);
+    if (trilhar_caminho(lab, l_pos, c_pos - 1, final)) {lab[l_pos][c_pos] = '.'; return true;}
+    if (trilhar_caminho(lab, l_pos + 1, c_pos, final)) {lab[l_pos][c_pos] = '.'; return true;}
+    if (trilhar_caminho(lab, l_pos, c_pos + 1, final)) {lab[l_pos][c_pos] = '.'; return true;}
+    if (trilhar_caminho(lab, l_pos - 1, c_pos, final)) {lab[l_pos][c_pos] = '.'; return true;}
+
+    lab[l_pos][c_pos] = '_';
+    return false;
 }
