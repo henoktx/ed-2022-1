@@ -32,9 +32,7 @@ bool trilhar_caminho(std::vector<std::string> &lab, int l_pos, int c_pos, std::p
 
     if (l_pos >= n_lin || c_pos >= n_col || l_pos < 0 || c_pos < 0) {
         return false;
-    } else if (lab[l_pos][c_pos] == '#') {
-        return false;
-    } else if (lab[l_pos][c_pos] == '.') {
+    } else if (lab[l_pos][c_pos] == '#' || lab[l_pos][c_pos] == '.') {
         return false;
     } else if (l_pos == final.first && c_pos == final.second) {
         lab[l_pos][c_pos] = '.';
