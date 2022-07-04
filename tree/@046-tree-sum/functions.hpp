@@ -22,6 +22,21 @@ struct BTree {
         this->root = extract_serial(ss);
     }
 
+    ~BTree() {
+        __destroy(this->root);
+    }
+
+    void __destroy(Node* node) {
+        if (node == nullptr) {
+            return;
+        }
+
+        __destroy(node->left);
+        __destroy(node->right);
+
+        delete node;
+    }
+
     Node* extract_serial(std::stringstream &ss) {
         std::string element {};
         ss >> element;
